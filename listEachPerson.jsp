@@ -4,29 +4,43 @@
 <%@ page import="com.mysql.jdbc.Driver" %> 
 <%@ page import="java.sql.*" %> 
 <%@ page language="java" %>
+<%@ page import="java.util.Date"%>
+<%@page import="java.text.ParseException"%>
+<%@page import="java.text.SimpleDateFormat"%>
+
 <html>
-<%  String name=request.getParameter("name");
-    String password=request.getParameter("password");
+<%
+	String name=request.getParameter("m1");
 %>
 <body>
-<%
-
+<% 
 	String url="jdbc:sqlserver://localhost:1433;DatabaseName=weeklyreport"; //数据库连接字符串;
- 
 	String user="sa";                 //数据库用户名;
 	String userpassword="12345678";              //数据库密码;
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); //加载驱动程序;   
 	Connection conn = DriverManager.getConnection(url,user,userpassword); //创建Connection连接;
 	Statement stmt=conn.createStatement();         
-	String sql="select name,password from system where system.name='"+name+"' AND system.password='"+password+"'";
+	String sql="select * from work ";
 	ResultSet rs = stmt.executeQuery(sql);
-	if(rs.next()){ %>
-		<jsp:forward page="workplace.jsp"></jsp:forward>
-	<% 
-	}else{  %>
-		<jsp:forward page="failed_login.jsp"></jsp:forward>
-	<% }
-%>   
+%>
+<table border="1" align="center">
+		<tr>
+		<th>工作编号</th>
+        <th>工作内容</th>
+        <th>完成时间</th>
+        <th>姓名</th>
+        </tr>
+       <%  while(rs.next()){%>
+        <tr>
+        <td><% out.print(rs.getString("bianhao"));%></td>
+        <td><% out.print(rs.getString("neirong"));%></td>
+        <td><% out.print(rs.getString("shijian"));%></td>
+        <td><% out.print(rs.getString("name"));}%></td>
+        </tr>
+        
+</table>
+<%
+out.println("<meta http-equiv='refresh' content='3;url=default.jsp'> ");
+%>
 </body>
-</html>    
-
+</html>

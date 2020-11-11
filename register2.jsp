@@ -17,7 +17,7 @@
 <body>
     <%
        
-    String url="jdbc:sqlserver://localhost:1433;DatabaseName=weekly"; //数据库连接字符串;
+    String url="jdbc:sqlserver://localhost:1433;DatabaseName=weeklyreport"; //数据库连接字符串;
      
     String user="sa";                 //数据库用户名;
     String userpassword="12345678";              //数据库密码;

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=gb2312"
     pageEncoding="gb2312"%>
+    <%@ page import="com.mysql.jdbc.Driver" %> 
+<%@ page import="java.sql.*" %> 
+<%@ page language="java" %>
+<%@ page import="java.util.Date"%>
+<%@page import="java.text.ParseException"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">  
 <html>
     <head>
@@ -38,7 +44,26 @@
 	           <a target=_blank >前四周</a>
         </li>
 
-        <li>每个人的历史资料：   
+        <li>每个人的历史资料：
+        
+        	<%
+        	String url="jdbc:sqlserver://localhost:1433;DatabaseName=weeklyreport"; //数据库连接字符串;
+        	 String m1;
+        	String user="sa";                 //数据库用户名;
+        	String userpassword="12345678";              //数据库密码;
+        	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); //加载驱动程序;   
+        	Connection conn = DriverManager.getConnection(url,user,userpassword); //创建Connection连接;
+        	Statement stmt=conn.createStatement();         
+        	String sql="select name from system ";
+        	ResultSet rs = stmt.executeQuery(sql);%>
+        	<form  name=form2 action="listEachPerson.jsp" method=POST>
+        	<%while(rs.next()){ 
+        		m1=rs.getString("name");%>
+        		<a target=_blank href="listEachPerson.jsp" >
+        		<% out.print(m1); %></a>,
+        	<% }
+        	%>   
+        	</form>
         </li>
         <li><a target=_blank>每个人的最後一笔资料</a>
         </li>
